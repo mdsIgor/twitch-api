@@ -9,8 +9,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:  $color-purple-light;
-    color: $color-black;
+    background-color:  $color-white;
+    color: $color-purple;
     text-transform: uppercase;
     font-weight: bold;
     margin-bottom: 5px; 
@@ -21,9 +21,10 @@
     cursor: pointer;
     transition: all .5s ease;
 
-    &:hover{
+    &:hover,
+    &--active{
         color: $color-white;
-        background-color: $color-black;
+        background-color: $color-purple-light;
 
        
     }
@@ -34,7 +35,7 @@
     &--offline {
         &::before {
             content: '';
-            border: 1px solid $color-black;
+            border: 1px solid $color-grey;
             margin-right: 10px;
             border-radius: 50%;
             width: 7px;

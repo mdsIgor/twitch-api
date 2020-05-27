@@ -1,6 +1,7 @@
 @import "../../styles/variables.scss";
 
-.stream-list{     
+.stream-list{   
+    
     &-container{
         background-color: $color-white;
         padding: 20px 0;
@@ -39,4 +40,26 @@
         background-size: cover;
         background-color: $color-white;
     }
+}
+
+.fade-appear {
+    opacity: 0.01;
+}
+   
+.fade-appear.fade-appear-active{
+    opacity: 2;
+    transition: opacity 5s ease-in;
+}
+
+@keyframes upDown {
+    0%{
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+
+
 }

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useFilter } from '../../context/Filter';
+import If from '../If';
+import Spinner from '../Spinner';
 import axios from 'axios';
 import "./StreamList.scss";
-import If from '../If';
 
 
 const StreamList = () => {
-    const channelNames = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+    const channelNames = ["freecodecamp", "ESL_SC2", "OgamingSC2", "cretetion", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
     const [channels, setChannels] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const { filter } = useFilter();
@@ -39,7 +40,7 @@ const StreamList = () => {
         const channelPromises = mountChannelPromises();
 
         Promise.all(channelPromises).then( channelRequestsResult => { 
-        
+
            const channelObjects = channelNames.reduce( (acc, curr) => { 
 
             let channelInfoData = findChannelRequests(channelRequestsResult, "channels", curr);
@@ -59,8 +60,10 @@ const StreamList = () => {
             setChannels(channelObjects);
             setIsLoading(false);
             
-        })
+        }).catch(error => console.log(`Error in promises ${error}`))
     },[]);
+
+
 
     const channelsBySelectedStatus = (channel) => {
         return filter === 'all' ? channel : channel.status  === filter
@@ -72,7 +75,7 @@ const StreamList = () => {
             condition = {isLoading}
 
             renderIf = {
-                <div>Loading</div>
+                <Spinner text="loading"/>
             }
 
             renderElse = {
@@ -83,11 +86,11 @@ const StreamList = () => {
                                 .filter(channelsBySelectedStatus)
                                 .map(channel => {
                                     return(
-                                        <li key={channel.channelInfo._id} className="stream-list__item">
-                                            <div className="stream-list__img" style={{backgroundImage:`url(${channel.channelInfo.logo})`}}/>
-                                            <a href={channel.channelInfo.url}>{channel.channelInfo.name}</a>
-                                            <span>{channel.streamInfo.stream ? channel.channelInfo.status : "offline" }</span>
-                                        </li> 
+                                            <li key={channel.channelInfo._id} className="stream-list__item">
+                                                <div className="stream-list__img" style={{backgroundImage:`url(${channel.channelInfo.logo})`}}/>
+                                                <a href={channel.channelInfo.url}>{channel.channelInfo.name}</a>
+                                                <span>{channel.streamInfo.stream ? channel.channelInfo.status : "offline" }</span>
+                                            </li> 
                                     )
                                 })
                         }
