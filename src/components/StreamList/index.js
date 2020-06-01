@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFilter } from '../../context/Filter';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import If from '../If';
 import Spinner from '../Spinner';
 import axios from 'axios';
@@ -10,6 +11,7 @@ const StreamList = () => {
     const channelNames = ["freecodecamp", "ESL_SC2", "OgamingSC2", "cretetion", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
     const [channels, setChannels] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [appStatus, setAppStatus] = useState("loading");
     const { filter } = useFilter();
 
     const request = async (route, name) => {
@@ -59,8 +61,12 @@ const StreamList = () => {
 
             setChannels(channelObjects);
             setIsLoading(false);
+            setAppStatus("loaded");
             
-        }).catch(error => console.log(`Error in promises ${error}`))
+        }).catch(error => {
+            setAppStatus(`${error}`);
+            console.log( error)
+        })
     },[]);
 
 
@@ -75,25 +81,37 @@ const StreamList = () => {
             condition = {isLoading}
 
             renderIf = {
-                <Spinner text="loading"/>
+                <Spinner text={appStatus}/>
             }
 
             renderElse = {
                 <main>
                     <ul className="stream-list-container">
+                        <TransitionGroup 
+                            component={null}
+                        >
                         {   Object
                                 .values(channels)
                                 .filter(channelsBySelectedStatus)
                                 .map(channel => {
                                     return(
-                                            <li key={channel.channelInfo._id} className="stream-list__item">
+                                        <CSSTransition
+                                            key={channel.channelInfo._id}
+                                            timeout={1500}
+                                            classNames="item"
+                                        >
+                                            <li className="stream-list__item">
                                                 <div className="stream-list__img" style={{backgroundImage:`url(${channel.channelInfo.logo})`}}/>
                                                 <a href={channel.channelInfo.url}>{channel.channelInfo.name}</a>
                                                 <span>{channel.streamInfo.stream ? channel.channelInfo.status : "offline" }</span>
                                             </li> 
+
+                     
+                                        </CSSTransition>
                                     )
                                 })
                         }
+                        </TransitionGroup>
                     </ul>
                 </main>
             }
