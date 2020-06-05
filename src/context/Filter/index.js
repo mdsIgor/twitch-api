@@ -1,4 +1,4 @@
-import React , { createContext, useState, useContext }from 'react';
+import React , { useState, useContext }from 'react';
 
 const FilterContext = React.createContext();
 

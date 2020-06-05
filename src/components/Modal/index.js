@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import If from '../If';
 import './Modal.scss';
 
 const Modal = props => {
-
-    const [isOpenState, setIsOpenState] = useState();
-
-    
-    useEffect(()=>{
-        if(props.isOpen){
-            setIsOpenState(true)
-        } else {
-            setIsOpenState(false)
-        }
-    }, []);
     
 
     return (
         
         <If
-            condition={isOpenState}
+            condition={props.isOpen}
             renderIf={
                 ReactDOM.createPortal(
-                    <div className="modal" onClick={() => setIsOpenState(false)}>
+                    <div className="modal" onClick={() => console.log('arrumar aqui modal on click')}>
                         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                             <h2>Sorry!</h2> 
                             <p>The service is unavailable ...</p>
+                            <p>Refresh the page (F5)</p>
                             <p>{props.error}</p>
                         </div>
                     </div>

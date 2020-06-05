@@ -44,25 +44,20 @@
         height: 40px;
         display: flex;
         border-radius: 50%;
-        background-size: cover;
-        background-color: $color-white;
     }
 }
 
 
-@keyframes upDown {
-
-    0%{
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-
-
+.item-appear {
+    opacity: 0;
+    transform: translateY(30px);
 }
 
+
+.item-appear-done {
+    opacity: 1;
+    transform: translateY(-30px);
+}
 
 .item-enter {
     opacity: 0;

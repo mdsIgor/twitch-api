@@ -5,13 +5,33 @@ import './RightMenu.scss';
 const RightMenu = () => {
 
     const {setFilter} = useFilter();
+    const menuItems = {
+        all: 'all',
+        online: 'online',
+        offline: 'offline'
+    }
 
     return(
         <nav>
             <ul className="menu">
-                <li className="menu__item menu__item--all" id="all" onClick={() => setFilter("all")}> All</li>
-                <li className="menu__item menu__item--online" id="online" onClick={() => setFilter("online")}> Online</li>
-                <li className="menu__item menu__item--offline" id="offline" onClick={() => setFilter("offline")}> Offline</li>
+                {
+                    Object
+                        .values(menuItems)
+                        .map( menuItem => {
+                            return (
+                                <li 
+                                    className={`menu__item menu__item--${menuItem}`}
+                                    id={menuItem} 
+                                    onClick={() => setFilter(menuItem)}
+                                >
+                                    {menuItem}
+                                </li>
+
+                            ); 
+                        }
+
+                    )
+                }
             </ul>
         </nav>
     );
