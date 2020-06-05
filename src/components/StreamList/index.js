@@ -43,7 +43,10 @@ const StreamList = () => {
                                             >
                                                 <li className="stream-list__item">
                                                     <div className="img-wrapper" >
-                                                        <img src={channel.channelInfo.logo} onError className="stream-list__img" />
+                                                        <img src={channel.channelInfo.logo} onError={(e) => {
+                                                            e.target.onError=null
+                                                            e.target.src = "https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png"
+                                                            }} className="stream-list__img" />
                                                     </div>
                                                     <a href={channel.channelInfo.url}>{channel.channelInfo.name}</a>
                                                     <span>{channel.streamInfo.stream ? channel.channelInfo.status : "offline"}</span>
